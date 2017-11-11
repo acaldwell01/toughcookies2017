@@ -99,7 +99,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
 
-    /* Declare OpMode members. */
+    // Declare OpMode members.
 
     TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
 
@@ -109,6 +109,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
     //  final double    CLAW_SPEED      = 0.02 ;                   // sets rate to move servo
 
+
+    // Acceleration Function
     public static double ScaleMotorCube(double joyStickPosition) {
         return (double) Math.pow(joyStickPosition, 3.0);
     }
@@ -167,7 +169,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         while (opModeIsActive()) {
             //sets flift servos to 90 degrees
-            
+
 
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
 
