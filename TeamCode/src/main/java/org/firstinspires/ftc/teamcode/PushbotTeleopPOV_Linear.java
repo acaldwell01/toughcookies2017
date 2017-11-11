@@ -157,8 +157,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         while (opModeIsActive()) {
             //sets flift servos to 90 degrees
 
-            robot.fs1.setPosition(.5);
+            /*robot.fs1.setPosition(.5);
             robot.fs2.setPosition(.5);
+            robot.fs3.setPosition(.5);
+            robot.fs4.setPosition(.5);*/
             robot.jko.setPosition(.5);
             robot.claw.setPosition(0);
 
@@ -176,12 +178,16 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
             if (gamepad2.a) {
-                robot.fs1.setPosition(.25);
-                robot.fs2.setPosition(.25);
+                robot.fs1.setPosition(.15);
+                robot.fs2.setPosition(.6);
+                robot.fs3.setPosition(.35);
+                robot.fs4.setPosition(.7);
             }
             if (gamepad2.b) {
                 robot.fs1.setPosition(.5);
-                robot.fs2.setPosition(.5);
+                robot.fs3.setPosition(.8);
+                robot.fs2.setPosition(.25);
+                robot.fs4.setPosition(.35);
             }
             if (gamepad1.a) {
                 robot.jko.setPosition(.75);
@@ -214,7 +220,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             // Normalize the values so neither exceed +/- 1.0
-
             max = Math.max(Math.abs(lVel), Math.abs(rVel));
 
             if (max > 0.5)
