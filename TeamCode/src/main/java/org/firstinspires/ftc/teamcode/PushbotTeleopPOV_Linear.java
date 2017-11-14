@@ -98,7 +98,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
-
     // Declare OpMode members.
 
     TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
@@ -145,12 +144,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
          */
 
         robot.init(hardwareMap);
-          robot.fs1.setPosition(.5);
-            robot.fs2.setPosition(.5);
-            robot.fs3.setPosition(.5);
-            robot.fs4.setPosition(.5);
-            robot.jko.setPosition(.5);
-            robot.claw.setPosition(0);
+        robot.fs1.setPosition(.5);
+        robot.fs2.setPosition(.5);
+        robot.fs3.setPosition(.5);
+        robot.fs4.setPosition(.5);
+        robot.jko.setPosition(.5);
+        robot.claw.setPosition(0);
 
 
         // Send telemetry message to signify robot waiting;
@@ -186,7 +185,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             if (gamepad1.a) {
                 while (gamepad1.a) {
-                    sleep(1);
+                    sleep(0);
 
                 }
                 fGrab = !fGrab;
@@ -211,6 +210,14 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
             if (gamepad2.x) {
                 robot.claw.setPosition(.75);
+            }
+
+            if (gamepad1.dpad_up) {
+                fLift = 0.5;
+            } else if (gamepad1.dpad_down) {
+                fLift = -0.5;
+            } else {
+                fLift = 0;
             }
 
             /*if (rVel < rDrive) {
