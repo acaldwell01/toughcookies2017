@@ -66,7 +66,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -167,9 +166,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
 
-            lDrive = -gamepad1.left_stick_y + gamepad1.right_stick_x;
+            lDrive = (gamepad1.left_stick_y - gamepad1.right_stick_x)*.5;
 
-            rDrive = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            rDrive = (gamepad1.left_stick_y + gamepad1.right_stick_x)*.5;
 
             cDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
             arm1 = -gamepad2.left_stick_y;
