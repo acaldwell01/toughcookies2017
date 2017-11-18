@@ -67,6 +67,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
  * <p>
@@ -109,30 +110,21 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     //  final double    CLAW_SPEED      = 0.02 ;                   // sets rate to move servo
 
 
-    // Acceleration Function
-    public static double ScaleMotorCube(double joyStickPosition) {
-        return (double) Math.pow(joyStickPosition, 3.0);
-    }
-
     @Override
 
     public void runOpMode() throws InterruptedException {
 
-        double lDrive;
+        double fDrive = 0;
 
-        double rDrive;
+        double rDrive = 0;
 
-        double cDrive;
+        double sDrive = 0;
 
         double fLift;
 
-        double max;
-
-        double lVel = 0;
-
-        double rVel = 0;
-
         boolean fGrab = false;
+
+        double speed = 1;
 
 
 
@@ -174,18 +166,22 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
 
-            lDrive = ScaleMotorCube(-gamepad1.left_stick_y + gamepad1.right_stick_x);
+            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
 
-            rDrive = ScaleMotorCube(-gamepad1.left_stick_y - gamepad1.right_stick_x);
+            fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive);
 
-            cDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
+            rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive);
 
-            fLift = -gamepad2.left_trigger + gamepad2.right_trigger;
+            if (gamepad1.a){
+              speed = 1;
+            }
+            if (!gamepad1.a){
+                speed = 0;
+            }
 
-
-            if (gamepad1.a) {
-                while (gamepad1.a) {
-                    sleep(0);
+            if (gamepad2.a) {
+                while (gamepad2.a) {
+                    sleep(1);
 
                 }
                 fGrab = !fGrab;
@@ -220,50 +216,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 fLift = 0;
             }
 
-            /*if (rVel < rDrive) {
-                rVel = rVel + 0.1;
+            robot.lDrive.setPower((fDrive - rDrive)+speed);
 
-            }
+            robot.rDrive.setPower((fDrive + rDrive)+speed);
 
-            if (rVel > rDrive) {
-                rVel = rVel - 0.1;
-
-            }
-
-            if (lVel < lDrive) {
-                lVel = lVel + 0.1;
-
-            }
-
-            if (lVel > lDrive) {
-                lVel = lVel - 0.1;
-
-            }*/
-
-            // Normalize the values so neither exceed +/- 1.0
-            max = Math.max(Math.abs(lVel), Math.abs(rVel));
-
-            if (max > 0.5)
-
-            {
-
-
-                rDrive /= max;
-
-                lDrive /= max;
-
-                cDrive /= max;
-
-                fLift /= max;
-
-            }
-
-
-            robot.lDrive.setPower(lDrive);
-
-            robot.rDrive.setPower(rDrive);
-
-            robot.cDrive.setPower(cDrive);
+            robot.cDrive.setPower(sDrive);
 
             robot.fLift.setPower(fLift);
 
