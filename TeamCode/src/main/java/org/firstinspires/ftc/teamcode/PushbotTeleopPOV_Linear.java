@@ -122,9 +122,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double fLift;
 
+        double speed = 1;
+
         boolean fGrab = false;
 
-        double speed = 1;
+
 
 
 
@@ -173,10 +175,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive);
 
             if (gamepad1.a){
-              speed = 1;
+              speed = 10;
             }
             if (!gamepad1.a){
-                speed = 0;
+                speed = 1;
             }
 
             if (gamepad2.a) {
@@ -216,9 +218,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 fLift = 0;
             }
 
-            robot.lDrive.setPower((fDrive - rDrive)+speed);
+            robot.lDrive.setPower((fDrive - rDrive)*speed);
 
-            robot.rDrive.setPower((fDrive + rDrive)+speed);
+            robot.rDrive.setPower((fDrive + rDrive)*speed);
 
             robot.cDrive.setPower(sDrive);
 
