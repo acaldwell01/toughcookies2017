@@ -139,9 +139,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         robot.init(hardwareMap);
         robot.fs1.setPosition(.5);
-        robot.fs2.setPosition(.5);
-        robot.fs3.setPosition(.5);
-        robot.fs4.setPosition(.5);
+        robot.fs3.setPosition(.8);
+        robot.fs2.setPosition(.25);
+        robot.fs4.setPosition(.35);
         robot.jko.setPosition(.5);
         robot.claw.setPosition(0);
 
@@ -167,13 +167,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
 
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-
-            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
-
             fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive);
 
             rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive);
 
+            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
+            
             if (gamepad1.a){
               speed = 10;
             }
