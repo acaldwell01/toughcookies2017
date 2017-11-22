@@ -66,7 +66,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -101,8 +100,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
-
-    /* Declare OpMode members. */
+    // Declare OpMode members.
 
     TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
@@ -132,6 +130,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double max;
 
+        boolean fGrab = false;
 
 
 
@@ -143,6 +142,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
          */
 
         robot.init(hardwareMap);
+        robot.fs1.setPosition(.5);
+        robot.fs2.setPosition(.5);
+        robot.fs3.setPosition(.5);
+        robot.fs4.setPosition(.5);
+        robot.jko.setPosition(.5);
 
 
         // Send telemetry message to signify robot waiting;
@@ -160,28 +164,35 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             //sets flift servos to 90 degrees
 
             robot.jko.setPosition(.5);
-            robot.claw.setPosition(0);
 
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
 
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
 
-            lDrive = (gamepad1.left_stick_y - gamepad1.right_stick_x)*.5;
+            lDrive = (gamepad1.left_stick_y - gamepad1.right_stick_x)*.6;
 
-            rDrive = (gamepad1.left_stick_y + gamepad1.right_stick_x)*.5;
+            rDrive = (gamepad1.left_stick_y + gamepad1.right_stick_x)*.6;
 
             cDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
-            arm1 = -gamepad2.left_stick_y;
-            arm2 = -gamepad2.right_stick_y;
+            arm1 = (-gamepad2.left_stick_y);
+            arm2 = (-gamepad2.right_stick_y);
+
 
 
             if (gamepad2.a) {
+                while (gamepad2.a) {
+                    sleep(1);
+
+                }
+                fGrab = !fGrab;
+            }
+            if (fGrab) {
                 robot.fs1.setPosition(.15);
                 robot.fs2.setPosition(.6);
                 robot.fs3.setPosition(.35);
                 robot.fs4.setPosition(.7);
             }
-            if (gamepad2.b) {
+            if (!fGrab) {
                 robot.fs1.setPosition(.5);
                 robot.fs3.setPosition(.8);
                 robot.fs2.setPosition(.25);
@@ -196,20 +207,16 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             if (gamepad2.x) {
                 robot.claw.setPosition(.75);
             }
+            if (gamepad2.y) {
+                robot.claw.setPosition(.5);
+            }
 
             if (gamepad2.dpad_up) {
-                robot.fLift.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.fLift.setPower(1);
-            }
-            else if(!gamepad2.dpad_up) {
-                robot.fLift.setPower(0);
-            }
-            if (gamepad2.dpad_down) {
-                robot.fLift.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.fLift.setPower(1);
-            }
-            else if(!gamepad2.dpad_down) {
-                robot.fLift.setPower(0);
+                fLift = 0.5;
+            } else if (gamepad2.dpad_down) {
+                fLift = -0.5;
+            } else {
+                fLift = 0;
             }
 
 
@@ -237,8 +244,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.rDrive.setPower(rDrive);
 
             robot.cDrive.setPower(cDrive);
-            robot.arm1.setPower(arm1);
-            robot.arm2.setPower(arm2);
+//            robot.arm1.setPower(arm1*0.5);
+//            robot.arm2.setPower(arm2*0.75);
+            robot.fLift.setPower(fLift);
 
 
         }

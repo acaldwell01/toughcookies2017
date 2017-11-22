@@ -27,17 +27,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
+@Autonomous(name="Pushbot: Auto Drive By Time Short", group="Pushbot")
 
-public class PushbotAutoDriveByTime extends LinearOpMode {
+public class PushbotAutoDriveByTimeShort extends LinearOpMode {
 
     /* Declare OpMode members. */
-    TCHardwarePushbot robot   = new TCHardwarePushbot();   // Use a Pushbot's hardware
+    TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
+    static final double FORWARD_SPEED = 0.6;
+    static final double TURN_SPEED = 0.5;
 
     @Override
     public void runOpMode() {
@@ -63,13 +63,23 @@ public class PushbotAutoDriveByTime extends LinearOpMode {
         robot.lDrive.setPower(FORWARD_SPEED);
         robot.rDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.5)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.25)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+
+        robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.lDrive.setPower(-.5);
+        robot.rDrive.setPower(-.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .3)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
         robot.lDrive.setPower(0);
         robot.rDrive.setPower(0);
-}
+    }
 }
 
