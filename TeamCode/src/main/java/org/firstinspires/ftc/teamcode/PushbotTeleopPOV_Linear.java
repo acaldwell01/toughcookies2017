@@ -66,6 +66,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 /**
@@ -123,6 +126,14 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double speed = 1;
 
+        double arm1Double = 0;
+
+        double arm2Double = 0;
+
+        int arm1Int = 0;
+
+        int arm2Int = 0;
+
         boolean fGrab = false;
 
 
@@ -142,12 +153,19 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.fs2.setPosition(.25);
         robot.fs4.setPosition(.35);
         robot.jko.setPosition(.5);
-        robot.claw.setPosition(0);
+        robot.claw.setPosition(.5);
+        robot.arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
 
         // Send telemetry message to signify robot waiting;
 
-        telemetry.addData("","Hello Driver");
+        System.out.println("Hello Driver");
 
         telemetry.update();
 
@@ -170,16 +188,20 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
             fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive)*0.025;
-
-            rDrive = rDrive + (Math.sin(-gamepad1.right_stick_x - rDrive)*0.025);
-
+            rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive)*0.025;
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
 
-            telemetry.addData("fDrive", fDrive);
-            telemetry.addData("rDrive", rDrive);
-            telemetry.addData("Joy Stick", gamepad1.left_stick_y);
-            telemetry.update();
+            //arm1Double = arm1Double + gamepad2.left_stick_y;
+            //arm2Double = arm2Double + gamepad2.right_stick_y;
+            arm2Int = robot.arm2.getCurrentPosition() + Math.round(-gamepad2.left_trigger*205);
+            arm1Int = robot.arm1.getCurrentPosition() + Math.round(-gamepad2.right_trigger*205);
 
+            robot.arm1.setTargetPosition(arm1Int);
+            robot.arm2.setTargetPosition(arm2Int);
+
+            telemetry.addData("Encoder 1",arm1Int);
+            telemetry.addData("Encoder 2",arm2Int);
+            telemetry.update();
 
             if (gamepad1.a) {
                 speed = 10;
@@ -226,12 +248,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             robot.lDrive.setPower(-(fDrive - rDrive) * speed);
-
             robot.rDrive.setPower(-(fDrive + rDrive) * speed);
-
             robot.cDrive.setPower(sDrive);
 
             robot.fLift.setPower(fLift);
+
 
         }
 
