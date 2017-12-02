@@ -149,8 +149,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.claw.setPosition(.5);
         robot.arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.arm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -253,7 +253,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.lDrive.setPower(-(fDrive - rDrive) * speed);
             robot.rDrive.setPower(-(fDrive + rDrive) * speed);
             robot.cDrive.setPower(sDrive);
-            robot.arm1.setPower(Math.sin(arm1Int - robot.arm1.getCurrentPosition()/410));
+
+            robot.arm1.setPower(Math.sin(arm1Int - robot.arm1.getCurrentPosition())/410);
 
             robot.fLift.setPower(fLift);
 
