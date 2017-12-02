@@ -3,10 +3,9 @@
  */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -26,6 +25,7 @@ public class TCHardwarePushbot {
     public Servo fs4;
     public Servo jko;
     public Servo claw;
+    public ColorSensor color_sensor;
 
     //Creates the hardware map
     HardwareMap hwMap = null;
@@ -51,6 +51,7 @@ public class TCHardwarePushbot {
         fs4 = hwMap.servo.get("fs4");
         jko = hwMap.servo.get("jko");
         claw = hwMap.servo.get("claw");
+        color_sensor = hwMap.colorSensor.get("color");
         lDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         arm1.setDirection(DcMotorSimple.Direction.REVERSE);
