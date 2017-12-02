@@ -126,10 +126,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double speed = 1;
 
-        double arm1Double = 0;
-
-        double arm2Double = 0;
-
         int arm1Int = 0;
 
         int arm2Int = 0;
