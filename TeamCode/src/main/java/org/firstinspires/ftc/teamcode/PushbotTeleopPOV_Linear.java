@@ -66,7 +66,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 /**
@@ -103,10 +103,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     // Declare OpMode members.
 
     TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
     // could also use HardwarePushbotMatrix class.
 
     //  double          clawOffset      = 0;                       // Servo mid position
@@ -118,17 +115,19 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
-        double lDrive;
+        double fDrive = 0;
 
-        double rDrive;
+        double rDrive = 0;
 
-        double cDrive;
+        double sDrive;
 
         double fLift;
-        double arm1;
-        double arm2;
 
-        double max;
+        double speed = 1;
+
+        int arm1Int = 0;
+
+        int arm2Int = 0;
 
         boolean fGrab = false;
 
@@ -143,10 +142,16 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         robot.init(hardwareMap);
         robot.fs1.setPosition(.5);
-        robot.fs2.setPosition(.5);
-        robot.fs3.setPosition(.5);
-        robot.fs4.setPosition(.5);
+        robot.fs3.setPosition(.8);
+        robot.fs2.setPosition(.25);
+        robot.fs4.setPosition(.35);
         robot.jko.setPosition(.5);
+        robot.claw.setPosition(.5);
+        robot.arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
 
 
         // Send telemetry message to signify robot waiting;
@@ -169,23 +174,49 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
 
-            lDrive = (gamepad1.left_stick_y - gamepad1.right_stick_x)*.6;
-
-            rDrive = (gamepad1.left_stick_y + gamepad1.right_stick_x)*.6;
-
-            cDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
-            arm1 = (-gamepad2.left_stick_y);
-            arm2 = (-gamepad2.right_stick_y);
 
 
+            fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive)*0.05;
+            rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive)*0.05;
+            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
+
+            //arm1Double = arm1Double + gamepad2.left_stick_y;
+            //arm2Double = arm2Double + gamepad2.right_stick_y;
+            arm2Int = arm2Int + Math.round(-gamepad2.left_stick_y);
+            arm1Int = arm1Int + Math.round(-gamepad2.right_stick_y);
+
+/*            robot.arm1.setTargetPosition(arm1Int);
+            robot.arm2.setTargetPosition(arm2Int);*/
+
+            telemetry.addData("Encoder 1",arm1Int);
+            telemetry.addData("Encoder 2",arm2Int);
+            telemetry.addData("Encoder Test",robot.arm1.getCurrentPosition());
+            telemetry.update();
+
+            if (gamepad1.a) {
+                speed = 10;
+            }
+            if (!gamepad1.a) {
+                speed = 1;
+            }
 
             if (gamepad2.a) {
                 while (gamepad2.a) {
-                    sleep(1);
+                    sleep(0);
 
                 }
                 fGrab = !fGrab;
             }
+
+            //regulators:
+            if (Math.abs(arm1Int) > 410){
+                arm1Int = Math.abs(arm1Int) - 410;
+            }
+
+            if (Math.abs(arm2Int) > 410){
+                arm2Int = Math.abs(arm2Int) - 410;
+            }
+
             if (fGrab) {
                 robot.fs1.setPosition(.15);
                 robot.fs2.setPosition(.6);
@@ -219,33 +250,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 fLift = 0;
             }
 
+            robot.lDrive.setPower(-(fDrive - rDrive) * speed);
+            robot.rDrive.setPower(-(fDrive + rDrive) * speed);
+            robot.cDrive.setPower(sDrive);
+            robot.arm1.setPower(Math.sin(arm1Int - robot.arm1.getCurrentPosition()/410));
 
-
-            // Normalize the values so neither exceed +/- 1.0
-
-            max = Math.max(Math.abs(lDrive), Math.abs(rDrive));
-
-            if (max > 0.5)
-
-            {
-
-                lDrive /= max;
-
-                rDrive /= max;
-
-                cDrive /= max;
-
-
-            }
-
-
-            robot.lDrive.setPower(lDrive);
-
-            robot.rDrive.setPower(rDrive);
-
-            robot.cDrive.setPower(cDrive);
-//            robot.arm1.setPower(arm1*0.5);
-//            robot.arm2.setPower(arm2*0.75);
             robot.fLift.setPower(fLift);
 
 

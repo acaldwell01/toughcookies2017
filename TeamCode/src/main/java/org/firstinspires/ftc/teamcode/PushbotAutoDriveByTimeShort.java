@@ -93,8 +93,8 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
         accum = accum / 20;
         sensedjjewelcolor = (accum > BLUE_COLOR) ? jewelcolor.Blue : jewelcolor.Red;
         if ((this.alliance == AutonomousConfiguration.AllianceColor.Blue && sensedjjewelcolor == jewelcolor.Blue) || (this.alliance == AutonomousConfiguration.AllianceColor.Red && sensedjjewelcolor == jewelcolor.Red)) {
-            robot.lDrive.setPower(FORWARD_SPEED);
-            robot.rDrive.setPower(FORWARD_SPEED);
+            robot.lDrive.setPower(-FORWARD_SPEED);
+            robot.rDrive.setPower(-FORWARD_SPEED);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .15)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
@@ -102,8 +102,8 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
             }
 
         } else {
-            robot.lDrive.setPower(-FORWARD_SPEED);
-            robot.rDrive.setPower(-FORWARD_SPEED);
+            robot.lDrive.setPower(FORWARD_SPEED);
+            robot.rDrive.setPower(FORWARD_SPEED);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .15)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
