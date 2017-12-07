@@ -69,29 +69,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-/**
- * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
- * <p>
- * All device access is managed through the HardwarePushbot class.
- * <p>
- * The code is structured as a LinearOpMode
- * <p>
- * <p>
- * <p>
- * This particular OpMode executes a POV Game style Teleop for a PushBot
- * <p>
- * In this mode the left stick moves the robot FWD and back, the Right stick turns left and right.
- * <p>
- * It raises and lowers the claw using (change to center motor)the Gampad Y and A buttons respectively.
- * <p>
- * It also opens and closes the claws slowly (change to swiffer) using the left and right Bumper buttons.
- * <p>
- * <p>
- * <p>
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * <p>
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
+
 
 @TeleOp(name = "Pushbot: Teleop POV TC4", group = "Pushbot")
 
@@ -192,7 +170,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             telemetry.addData("Encoder 2",arm2Int);
             telemetry.addData("Encoder Test",robot.arm1.getCurrentPosition());
             telemetry.update();
-
+//Insane Mode
             if (gamepad1.a) {
                 speed = 10;
             }

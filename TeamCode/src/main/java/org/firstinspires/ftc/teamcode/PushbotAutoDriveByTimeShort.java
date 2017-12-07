@@ -35,7 +35,7 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private AutonomousConfiguration autoConfig;
     private AutonomousConfiguration.AllianceColor alliance = AutonomousConfiguration.AllianceColor.None;
-    static final double BLUE_COLOR = 0.4;
+    static final double BLUE_COLOR = 40;
 
     public enum jewelcolor {
         None,
@@ -85,36 +85,39 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
         robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-        robot.jko.setPosition(.4);
+        robot.jko.setPosition(.95);
         int accum = 0;
         for (int I = 0; I < 20; I++) {
             accum += robot.color_sensor.blue();
         }
         accum = accum / 20;
-        sensedjjewelcolor = (accum > BLUE_COLOR) ? jewelcolor.Blue : jewelcolor.Red;
-        if ((this.alliance == AutonomousConfiguration.AllianceColor.Blue && sensedjjewelcolor == jewelcolor.Blue) || (this.alliance == AutonomousConfiguration.AllianceColor.Red && sensedjjewelcolor == jewelcolor.Red)) {
-            robot.lDrive.setPower(-FORWARD_SPEED);
-            robot.rDrive.setPower(-FORWARD_SPEED);
+        telemetry.addData("accum", accum);
+        telemetry.update();
+        sleep(5000);
+        sensedjjewelcolor = (accum >= BLUE_COLOR) ? jewelcolor.Blue : jewelcolor.Red;
+        if ((this.alliance == AutonomousConfiguration.AllianceColor.Blue && sensedjjewelcolor == jewelcolor.Blue) ||
+                (this.alliance == AutonomousConfiguration.AllianceColor.Red && sensedjjewelcolor == jewelcolor.Red)) {
+            robot.lDrive.setPower(FORWARD_SPEED);
+            robot.rDrive.setPower(FORWARD_SPEED);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .15)) {
+            while (opModeIsActive() && (runtime.seconds() < .20)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
             }
 
         } else {
-            robot.lDrive.setPower(FORWARD_SPEED);
-            robot.rDrive.setPower(FORWARD_SPEED);
+            robot.lDrive.setPower(-FORWARD_SPEED);
+            robot.rDrive.setPower(-FORWARD_SPEED);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .15)) {
+            while (opModeIsActive() && (runtime.seconds() < .20)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
             }
         }
 
-
         // Step 1:  Drive forward for 3 seconds
 
-        robot.lDrive.setPower(FORWARD_SPEED);
+        robot.lDrive.setPower(-FORWARD_SPEED);
         robot.rDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (
