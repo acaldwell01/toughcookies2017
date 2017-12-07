@@ -187,12 +187,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             //regulators:
-            if (Math.abs(arm1Int) > 410){
-                arm1Int = Math.abs(arm1Int) - 410;
+            if (Math.abs(arm1Int) > 1440){
+                arm1Int = arm1Int - (Math.abs(arm1Int)/arm1Int)*1440;
             }
 
-            if (Math.abs(arm2Int) > 410){
-                arm2Int = Math.abs(arm2Int) - 410;
+            if (Math.abs(arm2Int) > 1440){
+                arm2Int = arm2Int - (Math.abs(arm2Int)/arm2Int)*1440;
             }
 
             if (fGrab) {
@@ -232,7 +232,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.rDrive.setPower(-(fDrive + rDrive) * speed);
             robot.cDrive.setPower(sDrive);
 
-            robot.arm1.setPower(Math.sin(arm1Int - robot.arm1.getCurrentPosition())/410);
+            //robot.arm1.setPower(Math.sin(arm1Int - robot.arm1.getCurrentPosition())/1440);
 
             robot.fLift.setPower(fLift);
 
