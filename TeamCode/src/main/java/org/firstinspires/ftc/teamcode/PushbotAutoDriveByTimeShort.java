@@ -85,7 +85,7 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
         robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-        robot.jko.setPosition(.95);
+        robot.jko.setPosition(.98);
         int accum_blue = 0;
         for (int I = 0; I < 20; I++) {
             accum_blue += robot.color_sensor.blue();
