@@ -222,8 +222,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.rDrive.setPower(-(fDrive + rDrive) * speed);
             robot.cDrive.setPower(sDrive);
 
-            robot.arm1.setPower(-gamepad2.left_stick_y * 0.1);
-            robot.arm2.setPower(-gamepad2.right_stick_y * 0.1);
+            robot.arm1.setPower(-gamepad2.left_stick_y * 0.5);
+            robot.arm2.setPower(-gamepad2.right_stick_y * 0.5);
             robot.fLift.setPower(fLift);
 
 
