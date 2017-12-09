@@ -207,12 +207,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.fs2.setPosition(.25);
                 robot.fs4.setPosition(.35);
             }
-            if (gamepad1.a) {
-                robot.jko.setPosition(.75);
-            }
-            if (gamepad1.b) {
-                robot.jko.setPosition(.5);
-            }
             if (gamepad2.x) {
                 robot.claw.setPosition(.75);
             }

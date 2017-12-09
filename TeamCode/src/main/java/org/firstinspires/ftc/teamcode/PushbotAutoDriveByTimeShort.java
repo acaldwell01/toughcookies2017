@@ -86,19 +86,25 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
         robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
         robot.jko.setPosition(.95);
-        int accum = 0;
+        int accum_blue = 0;
         for (int I = 0; I < 20; I++) {
-            accum += robot.color_sensor.blue();
+            accum_blue += robot.color_sensor.blue();
         }
-        accum = accum / 20;
-        telemetry.addData("accum", accum);
+        int accum_red = 0;
+        for (int B = 0; B < 20; B++) {
+            accum_red += robot.color_sensor.red();
+        }
+        accum_blue = accum_blue / 20;
+        accum_red = accum_red / 20;
+        telemetry.addData("accum", accum_blue);
+        telemetry.addData("accum_red", accum_red);
         telemetry.update();
         sleep(5000);
-        sensedjjewelcolor = (accum >= BLUE_COLOR) ? jewelcolor.Blue : jewelcolor.Red;
+        sensedjjewelcolor = (accum_blue > accum_red) ? jewelcolor.Blue : jewelcolor.Red;
         if ((this.alliance == AutonomousConfiguration.AllianceColor.Blue && sensedjjewelcolor == jewelcolor.Blue) ||
                 (this.alliance == AutonomousConfiguration.AllianceColor.Red && sensedjjewelcolor == jewelcolor.Red)) {
             robot.lDrive.setPower(FORWARD_SPEED);
-            robot.rDrive.setPower(FORWARD_SPEED);
+            robot.rDrive.setPower(-FORWARD_SPEED);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .20)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
@@ -107,7 +113,7 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
 
         } else {
             robot.lDrive.setPower(-FORWARD_SPEED);
-            robot.rDrive.setPower(-FORWARD_SPEED);
+            robot.rDrive.setPower(FORWARD_SPEED);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .20)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
