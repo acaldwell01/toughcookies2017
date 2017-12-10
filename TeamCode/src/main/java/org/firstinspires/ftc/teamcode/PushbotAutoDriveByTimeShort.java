@@ -106,7 +106,7 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
             robot.lDrive.setPower(FORWARD_SPEED);
             robot.rDrive.setPower(-FORWARD_SPEED);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .20)) {
+            while (opModeIsActive() && (runtime.seconds() < .15)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
             }
@@ -115,7 +115,7 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
             robot.lDrive.setPower(-FORWARD_SPEED);
             robot.rDrive.setPower(FORWARD_SPEED);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .20)) {
+            while (opModeIsActive() && (runtime.seconds() < .15)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
             }
@@ -123,34 +123,6 @@ public class PushbotAutoDriveByTimeShort extends LinearOpMode {
 
         // Step 1:  Drive forward for 3 seconds
 
-        robot.lDrive.setPower(-FORWARD_SPEED);
-        robot.rDrive.setPower(FORWARD_SPEED);
-        runtime.reset();
-        while (
-
-                opModeIsActive() && (runtime.seconds() < 1.25))
-
-        {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-
-        robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.lDrive.setPower(-.5);
-        robot.rDrive.setPower(-.5);
-        runtime.reset();
-        while (
-
-                opModeIsActive() && (runtime.seconds() < .3))
-
-        {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.lDrive.setPower(0);
-        robot.rDrive.setPower(0);
     }
 }
 

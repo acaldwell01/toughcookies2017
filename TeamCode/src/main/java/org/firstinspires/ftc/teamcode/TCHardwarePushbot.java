@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //Defines motors and servos
@@ -26,6 +27,7 @@ public class TCHardwarePushbot {
     public Servo jko;
     public Servo claw;
     public ColorSensor color_sensor;
+    public TouchSensor glyphsensor;
 
     //Creates the hardware map
     HardwareMap hwMap = null;
@@ -40,7 +42,7 @@ public class TCHardwarePushbot {
         rDrive = hwMap.dcMotor.get("rDrive");
         lDrive = hwMap.dcMotor.get("lDrive");
         cDrive = hwMap.dcMotor.get("cDrive");
-
+        glyphsensor = hwMap.touchSensor.get("glyphsensor")
 
         fLift = hwMap.dcMotor.get("fLift");
         arm1 = hwMap.dcMotor.get("arm1");
