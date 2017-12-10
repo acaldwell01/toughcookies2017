@@ -15,21 +15,16 @@ public class PushbotArmTest extends LinearOpMode {
 
     TCHardwarePushbot robot = new TCHardwarePushbot();
 
+
     public void runOpMode() throws InterruptedException {
 
-        double arm1Int = 0;
-
         robot.init(hardwareMap);
-
-        robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-            arm1Int += -gamepad1.left_stick_y / 100;
-
-            robot.arm1.setPower(-gamepad1.left_stick_y);
+        robot.arm1.setPower(-gamepad2.left_stick_y);
 
         }
 

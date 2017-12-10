@@ -35,7 +35,11 @@ public class TCHardwarePushbot {
         cDrive = hwMap.dcMotor.get("cDrive");
         fLift = hwMap.dcMotor.get("fLift");
         arm1 = hwMap.dcMotor.get("arm1");
+        arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm2 = hwMap.dcMotor.get("arm2");
+        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         fs1 = hwMap.servo.get("fs1");
         fs2 = hwMap.servo.get("fs2");
         fs3 = hwMap.servo.get("fs3");
@@ -49,9 +53,9 @@ public class TCHardwarePushbot {
         rDrive.setPower(0);
         lDrive.setPower(0);
         cDrive.setPower(0);
-       /* fLift.setPower(0);
+        fLift.setPower(0);
         arm1.setPower(0);
-        arm2.setPower(0);*/
+        arm2.setPower(0);
     }
 
 

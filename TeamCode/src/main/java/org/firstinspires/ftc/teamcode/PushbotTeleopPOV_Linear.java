@@ -116,9 +116,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
-        double fDrive = 1;
+        double fDrive = 0;
 
-        double rDrive = 1;
+        double rDrive = 0;
 
         double sDrive;
 
@@ -144,8 +144,15 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.fs3.setPosition(.8);
         robot.fs2.setPosition(.25);
         robot.fs4.setPosition(.35);
+
         robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.arm1.setPower(0);
         robot.arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.arm2.setPower(0);
+        robot.lDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.lDrive.setPower(0);
+        robot.rDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rDrive.setPower(0);
 
 
         // Send telemetry message to signify robot waiting;
