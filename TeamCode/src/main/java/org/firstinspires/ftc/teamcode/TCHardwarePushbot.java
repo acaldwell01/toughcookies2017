@@ -42,7 +42,7 @@ public class TCHardwarePushbot {
         rDrive = hwMap.dcMotor.get("rDrive");
         lDrive = hwMap.dcMotor.get("lDrive");
         cDrive = hwMap.dcMotor.get("cDrive");
-        glyphsensor = hwMap.touchSensor.get("glyphsensor")
+        glyphsensor = hwMap.touchSensor.get("glyphsensor");
 
         fLift = hwMap.dcMotor.get("fLift");
         arm1 = hwMap.dcMotor.get("arm1");
