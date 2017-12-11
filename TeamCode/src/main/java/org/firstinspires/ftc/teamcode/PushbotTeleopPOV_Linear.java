@@ -140,10 +140,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
          */
 
         robot.init(hardwareMap);
-        robot.fs1.setPosition(.5);
-        robot.fs3.setPosition(.8);
-        robot.fs2.setPosition(.25);
-        robot.fs4.setPosition(.35);
 
         robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.arm1.setPower(0);
@@ -166,6 +162,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         waitForStart();
 
+        robot.fs1.setPosition(.5);
+        robot.fs3.setPosition(.8);
+        robot.fs2.setPosition(.25);
+        robot.fs4.setPosition(.35);
+
+
 
         // run until the end of the match (driver presses STOP)
 
@@ -182,6 +184,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive) * 0.05;
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
 
+            telemetry.addData("Run Mode",robot.arm1.getMode());
+            telemetry.addData("Zero Power Behavior",robot.arm1.getZeroPowerBehavior());
+            telemetry.update();
 
 
             if (!gamepad1.a) {
