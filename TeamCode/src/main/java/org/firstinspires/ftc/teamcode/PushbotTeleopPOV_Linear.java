@@ -1,65 +1,28 @@
 /*
-
 Copyright (c) 2016 Robert Atkinson
-
-
-
 All rights reserved.
-
-
-
 Redistribution and use in source and binary forms, with or without modification,
-
 are permitted (subject to the limitations in the disclaimer below) provided that
-
 the following conditions are met:
-
-
-
 Redistributions of source code must retain the above copyright notice, this list
-
 of conditions and the following disclaimer.
-
-
-
 Redistributions in binary form must reproduce the above copyright notice, this
-
 list of conditions and the following disclaimer in the documentation and/or
-
 other materials provided with the distribution.
-
-
-
 Neither the name of Robert Atkinson nor the names of his contributors may be used to
-
 endorse or promote products derived from this software without specific prior
-
 written permission.
-
-
-
 NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
-
 LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-
 THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESSFOR A PARTICULAR PURPOSE
-
 ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-
 FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-
 DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
-
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 */
 
 package org.firstinspires.ftc.teamcode;
@@ -124,10 +87,13 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double fLift;
 
+<<<<<<< HEAD
         double speed = 1;
 
         int Robux = 0;
 
+=======
+>>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
         boolean fGrab = false;
 
 
@@ -136,22 +102,13 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
 
         /* Initialize the hardware variables.
-
          * The init() method of the hardware class does all the work here
-
          */
 
         robot.init(hardwareMap);
 
-        robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.arm1.setPower(0);
-        robot.arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.arm2.setPower(0);
-        robot.lDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.lDrive.setPower(0);
-        robot.rDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.rDrive.setPower(0);
-
+        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
 
         // Send telemetry message to signify robot waiting;
 
@@ -170,7 +127,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.fs4.setPosition(.35);
 
 
-
         // run until the end of the match (driver presses STOP)
 
         while (opModeIsActive()) {
@@ -185,6 +141,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             robot.jko.setPosition(.5);
 
+<<<<<<< HEAD
             fDrive += Math.sin(-gamepad1.left_stick_y - fDrive) * 0.05;
             rDrive += (Math.sin(-gamepad1.right_stick_x - rDrive));
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
@@ -197,6 +154,16 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             if (!gamepad1.a) {
                 speed = 1;
             }
+=======
+            fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive) * 0.05;
+            rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive) * 0.025;
+            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
+
+            telemetry.addData("Run Mode", robot.arm1.getMode());
+            telemetry.addData("Zero Power Behavior", robot.arm1.getZeroPowerBehavior());
+            telemetry.update();
+            
+>>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
 
             if (gamepad2.a) {
                 while (gamepad2.a) {
@@ -230,12 +197,17 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 fLift = 0;
             }
 
+<<<<<<< HEAD
             robot.lDrive.setPower(-(fDrive - rDrive /2) * speed);
             robot.rDrive.setPower(-(fDrive + rDrive /2) * speed);
+=======
+            robot.lDrive.setPower(-(fDrive - rDrive));
+            robot.rDrive.setPower(-(fDrive + rDrive));
+>>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
             robot.cDrive.setPower(sDrive);
 
-            robot.arm1.setPower(-gamepad2.left_stick_y * 0.5);
-            robot.arm2.setPower(-gamepad2.right_stick_y * 0.5);
+            robot.arm1.setPower(-gamepad2.left_stick_y);
+            robot.arm2.setPower(-gamepad2.right_stick_y);
             robot.fLift.setPower(fLift);
 
 

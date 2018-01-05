@@ -35,6 +35,9 @@ public class PushbotArmTest extends LinearOpMode {
 
     TCHardwarePushbot robot = new TCHardwarePushbot();
 
+    double power1 = 0;
+    double pos1 = 0;
+
 
     public void runOpMode() throws InterruptedException {
 
@@ -43,6 +46,10 @@ public class PushbotArmTest extends LinearOpMode {
         int stage = 0;
 
         robot.init(hardwareMap);
+        robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         robot.arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -56,6 +63,11 @@ public class PushbotArmTest extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+<<<<<<< HEAD
+=======
+        robot.arm2.setPower(-gamepad2.left_stick_y * 0.05);
+        robot.arm1.setPower(-gamepad2.right_stick_y * 0.05);
+>>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
 
             telemetry.addData("Encoder Test", robot.arm1.getCurrentPosition());
             telemetry.addData("Encoder Test", robot.arm2.getCurrentPosition());
