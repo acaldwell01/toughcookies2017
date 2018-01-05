@@ -30,6 +30,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode.TCHardwarePushbot;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -57,15 +64,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * @see VuforiaLocalizer
  * @see VuforiaTrackableDefaultListener
  * see  ftc_app/doc/tutorial/FTC_FieldCoordinateSystemDefinition.pdf
- *
+ * <p>
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
+ * <p>
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Concept: VuMark Id", group ="Concept")
+@Autonomous(name = "Concept: VuMark Id", group = "Concept")
 public class ConceptVuMarkIdentification extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
@@ -77,8 +84,10 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
      * localization engine.
      */
     VuforiaLocalizer vuforia;
+    private ElapsedTime runtime = new ElapsedTime();
 
-    @Override public void runOpMode() {
+    @Override
+    public void runOpMode() {
 
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
@@ -111,7 +120,8 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
          */
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
+        TCHardwarePushbot robot = new TCHardwarePushbot();   // Use a Pushbot's hardware
+        robot.init(hardwareMap);
         /**
          * Load the data set containing the VuMarks for Relic Recovery. There's only one trackable
          * in this data set: all three of the VuMarks in the game were created from this one template,
@@ -147,7 +157,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                 /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
                  * it is perhaps unlikely that you will actually need to act on this pose information, but
                  * we illustrate it nevertheless, for completeness. */
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
 
                 /* We further illustrate how to decompose the pose into useful rotational and
@@ -166,11 +176,51 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                     double rY = rot.secondAngle;
                     double rZ = rot.thirdAngle;
                 }
-            }
-            else {
+            } else {
                 telemetry.addData("VuMark", "not visible");
             }
-
+            if (vuMark == RelicRecoveryVuMark.LEFT) {
+                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.lDrive.setPower(.5);
+                robot.rDrive.setPower(.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < .4)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                robot.lDrive.setPower(-.5);
+                robot.rDrive.setPower(.5);
+                while (opModeIsActive() && (runtime.seconds() < .1)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                robot.lDrive.setPower(0);
+                robot.rDrive.setPower(0);
+            }
+            if (vuMark == RelicRecoveryVuMark.CENTER) {
+                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.lDrive.setPower(.5);
+                robot.rDrive.setPower(.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < .6
+                )) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+            }
+            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.lDrive.setPower(.5);
+                robot.rDrive.setPower(.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < 2)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+            }
             telemetry.update();
         }
     }
