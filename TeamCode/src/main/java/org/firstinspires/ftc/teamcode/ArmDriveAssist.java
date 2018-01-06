@@ -19,10 +19,6 @@ public class ArmDriveAssist extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
-        boolean toggle = false;
-
-        int stage = 0;
-
         double pos1 = 0;
         double currPos1 = 0;
         double power1 = 0;
@@ -51,10 +47,10 @@ public class ArmDriveAssist extends LinearOpMode {
             telemetry.update();
 
             pos1 += -gamepad1.left_stick_y * 0.01;
-            currPos1 = Math.round((robot.arm1.getCurrentPosition() / 1440) * 1000) / 1000;
+            currPos1 = (robot.arm1.getCurrentPosition() / 1440);
             power1 = (currPos1 - pos1);
             pos2 += -gamepad1.right_stick_y * 0.01;
-            currPos2 = Math.round((robot.arm2.getCurrentPosition() / 1440) * 1000) / 1000;
+            currPos2 = robot.arm2.getCurrentPosition() / 1440;
             power2 = (currPos2 - pos2);
 
             robot.arm1.setPower(power1);
