@@ -63,11 +63,9 @@ public class PushbotArmTest extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-<<<<<<< HEAD
-=======
         robot.arm2.setPower(-gamepad2.left_stick_y * 0.05);
         robot.arm1.setPower(-gamepad2.right_stick_y * 0.05);
->>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
+
 
             telemetry.addData("Encoder Test", robot.arm1.getCurrentPosition());
             telemetry.addData("Encoder Test", robot.arm2.getCurrentPosition());
@@ -77,8 +75,8 @@ public class PushbotArmTest extends LinearOpMode {
             telemetry.addData("DriveEncoder",robot.lDrive.getCurrentPosition());
             telemetry.update();
 
-            robot.arm1.setPower(gamepad1.left_stick_y * 0.025);
-            robot.arm2.setPower(gamepad1.right_stick_y * 0.025);
+            robot.arm1.setPower(gamepad1.left_stick_y * 0.05);
+            robot.arm2.setPower(gamepad1.right_stick_y * 0.05);
 
 
             /*moveTo(100,1,0);

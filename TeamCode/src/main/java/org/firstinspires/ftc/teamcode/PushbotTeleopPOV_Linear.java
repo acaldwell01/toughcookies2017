@@ -87,14 +87,14 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double fLift;
 
-<<<<<<< HEAD
         double speed = 1;
 
         int Robux = 0;
 
-=======
->>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
+
         boolean fGrab = false;
+
+        boolean claw = false;
 
 
 
@@ -125,6 +125,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.fs3.setPosition(.8);
         robot.fs2.setPosition(.25);
         robot.fs4.setPosition(.35);
+        robot.claw.setPosition(.5);
 
 
         // run until the end of the match (driver presses STOP)
@@ -141,7 +142,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             robot.jko.setPosition(.5);
 
-<<<<<<< HEAD
+
             fDrive += Math.sin(-gamepad1.left_stick_y - fDrive) * 0.05;
             rDrive += (Math.sin(-gamepad1.right_stick_x - rDrive));
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
@@ -154,7 +155,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             if (!gamepad1.a) {
                 speed = 1;
             }
-=======
+
             fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive) * 0.05;
             rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive) * 0.025;
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
@@ -163,7 +164,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             telemetry.addData("Zero Power Behavior", robot.arm1.getZeroPowerBehavior());
             telemetry.update();
             
->>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
+
 
             if (gamepad2.a) {
                 while (gamepad2.a) {
@@ -189,6 +190,19 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.claw.setPosition(.75);
             }
 
+            if(gamepad2.y){
+                while (gamepad2.y){sleep(0);}
+                claw = !claw;
+            }
+
+            if (claw){
+                robot.claw.setPosition(0);
+            }
+
+            if (!claw){
+                robot.claw.setPosition(.5);
+            }
+
             if (gamepad2.dpad_up) {
                 fLift = 0.5;
             } else if (gamepad2.dpad_down) {
@@ -197,13 +211,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 fLift = 0;
             }
 
-<<<<<<< HEAD
+
             robot.lDrive.setPower(-(fDrive - rDrive /2) * speed);
             robot.rDrive.setPower(-(fDrive + rDrive /2) * speed);
-=======
+
             robot.lDrive.setPower(-(fDrive - rDrive));
             robot.rDrive.setPower(-(fDrive + rDrive));
->>>>>>> 6495c67f96b47825d55b2065ce03743c55307a24
             robot.cDrive.setPower(sDrive);
 
             robot.arm1.setPower(-gamepad2.left_stick_y);

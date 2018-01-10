@@ -56,6 +56,7 @@ public class TCHardwarePushbot {
         fLift.setPower(0);
         arm1.setPower(0);
         arm2.setPower(0);
+        jko.setPosition(.50);
     }
 
 

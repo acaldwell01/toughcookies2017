@@ -43,14 +43,13 @@ public class ArmDriveAssist extends LinearOpMode {
 
             telemetry.addData("Pos", (currPos1) + ",   " + "Encoder: " + robot.arm1.getCurrentPosition());
             telemetry.addData("Target Position", pos1 + ",   " + "Power: " + power1);
-            telemetry.addLine("Hello " + 1 + " this is a magical number");
             telemetry.update();
 
             pos1 += -gamepad1.left_stick_y * 0.01;
-            currPos1 = (robot.arm1.getCurrentPosition() / 1440);
+            currPos1 = (robot.arm1.getCurrentPosition() / 23040);
             power1 = (currPos1 - pos1);
             pos2 += -gamepad1.right_stick_y * 0.01;
-            currPos2 = robot.arm2.getCurrentPosition() / 1440;
+            currPos2 = robot.arm2.getCurrentPosition() / 56700;
             power2 = (currPos2 - pos2);
 
             robot.arm1.setPower(power1);
