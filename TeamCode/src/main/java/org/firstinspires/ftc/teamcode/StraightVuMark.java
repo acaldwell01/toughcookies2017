@@ -30,13 +30,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.teamcode.TCHardwarePushbot;
-
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -72,8 +66,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name = "Concept: VuMark Id", group = "Concept")
-public class ConceptVuMarkIdentification extends LinearOpMode {
+@Autonomous(name = "StraightVuMark", group = "Concept")
+public class StraightVuMark extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
 
@@ -180,8 +174,35 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                 telemetry.addData("VuMark", "not visible");
             }
             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.lDrive.setPower(.5);
+                robot.rDrive.setPower(.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < .6)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                robot.lDrive.setPower(0);
+                robot.rDrive.setPower(0);
+                robot.cDrive.setPower(.5);
+            }
+            if (vuMark == RelicRecoveryVuMark.CENTER) {
+                robot.lDrive.setPower(.5);
+                robot.rDrive.setPower(.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < .5)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                robot.lDrive.setPower(-.5);
+                robot.rDrive.setPower(.5);
+                while (opModeIsActive() && (runtime.seconds() < .1)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                robot.lDrive.setPower(0);
+                robot.rDrive.setPower(0);
+            }
+            if (vuMark == RelicRecoveryVuMark.RIGHT) {
                 robot.lDrive.setPower(.5);
                 robot.rDrive.setPower(.5);
                 runtime.reset();
@@ -197,29 +218,6 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
                 }
                 robot.lDrive.setPower(0);
                 robot.rDrive.setPower(0);
-            }
-            if (vuMark == RelicRecoveryVuMark.CENTER) {
-                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.lDrive.setPower(.5);
-                robot.rDrive.setPower(.5);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < .6
-                )) {
-                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
-            }
-            if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.lDrive.setPower(.5);
-                robot.rDrive.setPower(.5);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 2)) {
-                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
             }
             telemetry.update();
         }
