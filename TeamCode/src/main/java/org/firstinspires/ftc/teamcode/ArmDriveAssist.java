@@ -41,15 +41,18 @@ public class ArmDriveAssist extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            telemetry.addData("Pos", (currPos1) + ",   " + "Encoder: " + robot.arm1.getCurrentPosition());
-            telemetry.addData("Target Position", pos1 + ",   " + "Power: " + power1);
+            telemetry.addData("Math", "Encoder: " + robot.arm1.getCurrentPosition() + "   Current Position: " + robot.arm1.getCurrentPosition() / 23040 + "   Target Position: " + pos1 + "   Dividing: " + (robot.arm1.getCurrentPosition() / 23040 - pos1));
+            telemetry.addData("Pos 1", (currPos1) + ",   " + "Encoder 1: " + robot.arm1.getCurrentPosition());
+            telemetry.addData("Target Position 1", pos1 + ",   " + "Power 1: " + power1);
+            telemetry.addData("Pos 2", (currPos2) + ",   " + "Encoder 2: " + robot.arm2.getCurrentPosition());
+            telemetry.addData("Target Position 2", pos2 + ",   " + "Power 2: " + power2);
             telemetry.update();
 
             pos1 += -gamepad1.left_stick_y * 0.01;
-            currPos1 = (robot.arm1.getCurrentPosition() / 23040);
+            currPos1 = Math.round((robot.arm1.getCurrentPosition() / 23040) * 1000000) / 1000000;
             power1 = (currPos1 - pos1);
             pos2 += -gamepad1.right_stick_y * 0.01;
-            currPos2 = robot.arm2.getCurrentPosition() / 56700;
+            currPos2 = Math.round((robot.arm2.getCurrentPosition() / 56700) * 1000000) / 1000000;
             power2 = (currPos2 - pos2);
 
             robot.arm1.setPower(power1);
