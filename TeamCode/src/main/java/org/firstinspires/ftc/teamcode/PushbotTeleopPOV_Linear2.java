@@ -33,6 +33,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import static org.firstinspires.ftc.teamcode.Calibration.fs1;
+import static org.firstinspires.ftc.teamcode.Calibration.fs2;
+import static org.firstinspires.ftc.teamcode.Calibration.fs3;
+import static org.firstinspires.ftc.teamcode.Calibration.fs4;
+
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -130,14 +135,13 @@ public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
             telemetry.addData("lDrive Speed", fDrive + rDrive);
             telemetry.addData("rDrive Speed", fDrive - rDrive);
             telemetry.addData("rDrive", rDrive);
-            telemetry.addData("Arm Mode",robot.arm1.getMode());
-            System.out.println("Hi yalls");
+            telemetry.addData("Arm Mode", robot.arm1.getMode());
             telemetry.update();
 
             // Assign all power values
 
-            fDrive = gamepad1.left_stick_y;
-            rDrive = -gamepad1.right_stick_x;
+            fDrive = gamepad1.left_stick_y * 0.75;
+            rDrive = -gamepad1.right_stick_x * 0.6;
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
 
             // If statements to assign the controller something to do
@@ -150,16 +154,16 @@ public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
                 fGrab = !fGrab;
             }
             if (fGrab) {
-                robot.fs1.setPosition(.15);
-                robot.fs2.setPosition(.6);
-                robot.fs3.setPosition(.35);
-                robot.fs4.setPosition(.7);
+                robot.fs1.setPosition(fs1);
+                robot.fs2.setPosition(fs2);
+                robot.fs3.setPosition(fs3);
+                robot.fs4.setPosition(fs4);
             }
             if (!fGrab) {
-                robot.fs1.setPosition(.5);
-                robot.fs3.setPosition(.8);
-                robot.fs2.setPosition(.25);
-                robot.fs4.setPosition(.35);
+                robot.fs1.setPosition(fs1 + .35);
+                robot.fs2.setPosition(fs2 - .35);
+                robot.fs3.setPosition(fs3 + .35);
+                robot.fs4.setPosition(fs4 - .35);
             }
 
 

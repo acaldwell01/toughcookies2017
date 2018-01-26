@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import static org.firstinspires.ftc.teamcode.Calibration.fs1;
+
 @TeleOp(name = "Arm Test", group = "Pushbot")
 
 public class PushbotArmTest extends LinearOpMode {
@@ -62,7 +64,6 @@ public class PushbotArmTest extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-
         robot.arm2.setPower(-gamepad2.left_stick_y * 0.05);
         robot.arm1.setPower(-gamepad2.right_stick_y * 0.05);
 
