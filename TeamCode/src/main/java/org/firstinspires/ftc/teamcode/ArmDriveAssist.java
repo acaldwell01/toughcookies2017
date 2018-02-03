@@ -25,6 +25,8 @@ public class ArmDriveAssist extends LinearOpMode {
         double pos2 = 0;
         double currPos2 = 0;
         double power2 = 0;
+        double test = 0;
+        int i = 0;
 
         robot.init(hardwareMap);
 
@@ -46,14 +48,18 @@ public class ArmDriveAssist extends LinearOpMode {
             telemetry.addData("Target Position 1", pos1 + ",   " + "Power 1: " + power1);
             telemetry.addData("Pos 2", (currPos2) + ",   " + "Encoder 2: " + robot.arm2.getCurrentPosition());
             telemetry.addData("Target Position 2", pos2 + ",   " + "Power 2: " + power2);
+            telemetry.addData("Test", test);
             telemetry.update();
 
             pos1 += -gamepad1.left_stick_y * 0.01;
-            currPos1 = Math.round((robot.arm1.getCurrentPosition() / 23040) * 1000000) / 1000000;
+            currPos1 = (robot.arm1.getCurrentPosition() / 23040);
             power1 = (currPos1 - pos1);
             pos2 += -gamepad1.right_stick_y * 0.01;
             currPos2 = Math.round((robot.arm2.getCurrentPosition() / 56700) * 1000000) / 1000000;
             power2 = (currPos2 - pos2);
+            test = Math.round(i / .567);
+            i++;
+            sleep(10);
 
             robot.arm1.setPower(power1);
             robot.arm2.setPower(power2);

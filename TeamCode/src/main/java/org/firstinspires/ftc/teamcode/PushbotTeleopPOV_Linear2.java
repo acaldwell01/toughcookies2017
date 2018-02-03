@@ -63,7 +63,7 @@ import static org.firstinspires.ftc.teamcode.Calibration.fs4;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Pushbot: Teleop POV TC42", group = "Pushbot")
+@TeleOp(name = "Pushbot: Linear2", group = "Pushbot")
 
 //@Disabled
 public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
@@ -175,18 +175,16 @@ public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
             }
 
             if (claw) {
-                robot.claw.setPosition(.2);
+                robot.claw.setPosition(Calibration.claw);
             }
 
             if (!claw) {
-                robot.claw.setPosition(.75);
+                robot.claw.setPosition(Calibration.claw + .55);
             }
 
             if (gamepad1.right_bumper) {
-                robot.fLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 fLift = 0.5;
             } else if (gamepad1.left_bumper) {
-                robot.fLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 fLift = -0.5;
             } else {
                 fLift = 0;
