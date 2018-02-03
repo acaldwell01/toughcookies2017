@@ -70,7 +70,7 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     TCHardwarePushbot         robot   = new TCHardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 280 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1440  ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1/2.15 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -86,8 +86,6 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
-robot.rDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
@@ -109,7 +107,7 @@ robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  6,  6, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(.5,3,3,3);
 
 
         sleep(1000);     // pause for servos to move
@@ -135,7 +133,7 @@ robot.lDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
+            // Determine new targe t position, and pass to motor controller
             newLeftTarget = robot.lDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = robot.rDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             robot.lDrive.setTargetPosition(newLeftTarget);
