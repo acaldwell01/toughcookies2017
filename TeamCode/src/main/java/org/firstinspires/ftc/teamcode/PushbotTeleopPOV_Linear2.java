@@ -31,8 +31,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import static org.firstinspires.ftc.teamcode.Calibration.fs1;
+import static org.firstinspires.ftc.teamcode.Calibration.fs2;
+import static org.firstinspires.ftc.teamcode.Calibration.fs3;
+import static org.firstinspires.ftc.teamcode.Calibration.fs4;
 
 
 /**
@@ -59,10 +63,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Pushbot: Teleop POV TC4", group = "Pushbot")
+@TeleOp(name = "Pushbot: Linear2", group = "Pushbot")
 
 //@Disabled
-public class PushbotTeleopPOV_Linear extends LinearOpMode {
+public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -88,56 +92,30 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
         double fLift;
 
-
-
-
-
         boolean fGrab = false;
 
         boolean claw = false;
 
+        // Initialize the hardware variables.
 
-
-
-
-
-
-        /* Initialize the hardware variables.
-         * The init() method of the hardware class does all the work here
-         */
+        // The init() method of the hardware class does all the work here
 
         robot.init(hardwareMap);
 
-        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        // Set all the modes of the motors to prepare for Start
+
+        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.lDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.lDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.rDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.cDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-        // Send telemetry message to signify robot waiting;
-
-        System.out.println("Hello Driver");
-
-        telemetry.update();
-
+        robot.fLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Wait for the game to start (driver presses PLAY)
 
         waitForStart();
-        robot.fs1.setPosition(.5);
-        robot.fs3.setPosition(.8);
-        robot.fs2.setPosition(.25);
-        robot.fs4.setPosition(.35);
-        robot.jko.setPosition(.5);
-
-        robot.arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         robot.fs1.setPosition(.5);
         robot.fs3.setPosition(.8);
@@ -149,116 +127,45 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
 
         while (opModeIsActive()) {
-            //sets flift servos to 90 degrees
 
+            robot.jko.setPosition(0.7);
 
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
+            // Telemetry statements to give info about the robot
 
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-
-
-
-
-            fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive)*0.05;
-            rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive)*0.05;
-            sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
-
-            //arm1Double = arm1Double + gamepad2.left_stick_y;
-            //arm2Double = arm2Double + gamepad2.right_stick_y;
-
-
-            if (gamepad1.a) {
-                speed = 10;
-            }
-            if (!gamepad1.a) {
-                speed = 1;
-            }
-
-            if (gamepad2.a) {
-                while (gamepad2.a) {
-                    sleep(0);
-
-                }
-                fGrab = !fGrab;
-            }
-            if (fGrab) {
-                robot.fs1.setPosition(.15);
-                robot.fs2.setPosition(.6);
-                robot.fs3.setPosition(.35);
-                robot.fs4.setPosition(.7);
-            }
-            if (!fGrab) {
-                robot.fs1.setPosition(.5);
-                robot.fs3.setPosition(.8);
-                robot.fs2.setPosition(.25);
-                robot.fs4.setPosition(.35);
-            }
-
-            if (gamepad2.x) {
-                robot.claw.setPosition(.75);
-            }
-
-            if (gamepad2.dpad_up) {
-                fLift = 0.5;
-            } else if (gamepad2.dpad_down) {
-                fLift = -0.5;
-            } else {
-                fLift = 0;
-            }
-
-            robot.lDrive.setPower(-(fDrive - rDrive/2) * speed);
-            robot.rDrive.setPower(-(fDrive + rDrive/2) * speed);
-            robot.cDrive.setPower(sDrive);
-
-
-            /*robot.arm1.setPower(-gamepad2.left_stick_y * 0.5);
-            robot.arm2.setPower(-gamepad2.right_stick_y * 0.5);*/
-
-            Robux++;
-
-            robot.jko.setPosition(.5);
-
-            telemetry.addData("lDrive Speed",fDrive + rDrive);
-            telemetry.addData("rDrive Speed",fDrive - rDrive);
+            telemetry.addData("lDrive Speed", fDrive + rDrive);
+            telemetry.addData("rDrive Speed", fDrive - rDrive);
             telemetry.addData("rDrive", rDrive);
+            telemetry.addData("Arm Mode", robot.arm1.getMode() + "     Value: " + robot.arm1.getCurrentPosition());
             telemetry.update();
 
-            if(gamepad1.right_bumper){
-                fDrive = fDrive + Math.sin(-gamepad1.left_stick_y - fDrive) * 0.05;
-                rDrive = rDrive + Math.sin(-gamepad1.right_stick_x - rDrive) * 0.05;
-            }
+            // Assign all power values
 
-            if(!gamepad1.right_bumper) {
-                fDrive = gamepad1.left_stick_y * .5;
-                rDrive = -gamepad1.right_stick_x * .5;
-            }
-
+            fDrive = gamepad1.left_stick_y * 0.75;
+            rDrive = -gamepad1.right_stick_x * 0.6;
             sDrive = -gamepad1.left_trigger + gamepad1.right_trigger;
 
+            // If statements to assign the controller something to do
 
-            if (gamepad2.a) {
-                while (gamepad2.a) {
+            if (gamepad1.a) {
+                while (gamepad1.a) {
                     sleep(0);
 
                 }
                 fGrab = !fGrab;
             }
             if (fGrab) {
-                robot.fs1.setPosition(.15);
-                robot.fs2.setPosition(.6);
-                robot.fs3.setPosition(.35);
-                robot.fs4.setPosition(.7);
+                robot.fs1.setPosition(fs1);
+                robot.fs2.setPosition(fs2);
+                robot.fs3.setPosition(fs3);
+                robot.fs4.setPosition(fs4);
             }
             if (!fGrab) {
-                robot.fs1.setPosition(.5);
-                robot.fs3.setPosition(.8);
-                robot.fs2.setPosition(.25);
-                robot.fs4.setPosition(.35);
+                robot.fs1.setPosition(fs1 + .35);
+                robot.fs2.setPosition(fs2 - .35);
+                robot.fs3.setPosition(fs3 + .35);
+                robot.fs4.setPosition(fs4 - .35);
             }
 
-            if (gamepad2.x) {
-                robot.claw.setPosition(.75);
-            }
 
             if (gamepad2.y) {
                 while (gamepad2.y) {
@@ -268,30 +175,30 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             if (claw) {
-                robot.claw.setPosition(.2);
+                robot.claw.setPosition(Calibration.claw);
             }
 
             if (!claw) {
-                robot.claw.setPosition(.75);
+                robot.claw.setPosition(Calibration.claw + .55);
             }
 
-            if (gamepad2.dpad_up) {
+            if (gamepad1.right_bumper) {
                 fLift = 0.5;
-            } else if (gamepad2.dpad_down) {
+            } else if (gamepad1.left_bumper) {
                 fLift = -0.5;
             } else {
                 fLift = 0;
             }
 
+            // The actual power setting of the motors
+
             robot.lDrive.setPower(fDrive + rDrive);
             robot.rDrive.setPower(fDrive - rDrive);
             robot.cDrive.setPower(sDrive);
 
-            robot.arm1.setPower(-gamepad2.left_stick_y * 0.5);
-            robot.arm2.setPower(-gamepad2.right_stick_y * 0.5);
+            robot.arm1.setPower(-gamepad2.left_stick_y * 0.125);
+            robot.arm2.setPower(gamepad2.right_stick_y * 0.25);
             robot.fLift.setPower(fLift);
-
-
 
 
         }

@@ -42,29 +42,32 @@ public class TCHardwarePushbot {
         rDrive = hwMap.dcMotor.get("rDrive");
         lDrive = hwMap.dcMotor.get("lDrive");
         cDrive = hwMap.dcMotor.get("cDrive");
-        glyphsensor = hwMap.touchSensor.get("glyphsensor");
 
         fLift = hwMap.dcMotor.get("fLift");
         arm1 = hwMap.dcMotor.get("arm1");
+        arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm2 = hwMap.dcMotor.get("arm2");
+        arm2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         fs1 = hwMap.servo.get("fs1");
         fs2 = hwMap.servo.get("fs2");
         fs3 = hwMap.servo.get("fs3");
         fs4 = hwMap.servo.get("fs4");
         jko = hwMap.servo.get("jko");
         claw = hwMap.servo.get("claw");
+
         color_sensor = hwMap.colorSensor.get("color");
-        lDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        arm1.setDirection(DcMotorSimple.Direction.REVERSE);
+        
         // Set all motors to zero power to get ready for start
         rDrive.setPower(0);
         lDrive.setPower(0);
         cDrive.setPower(0);
-       /* fLift.setPower(0);
+        fLift.setPower(0);
         arm1.setPower(0);
-        arm2.setPower(0);*/
 
+        arm2.setPower(0);
+        jko.setPosition(.50);
     }
 
 
