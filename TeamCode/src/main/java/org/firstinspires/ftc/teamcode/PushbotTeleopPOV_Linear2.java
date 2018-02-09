@@ -128,14 +128,14 @@ public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            robot.jko.setPosition(0.45);
+            robot.jko.setPosition(0.7);
 
             // Telemetry statements to give info about the robot
 
             telemetry.addData("lDrive Speed", fDrive + rDrive);
             telemetry.addData("rDrive Speed", fDrive - rDrive);
             telemetry.addData("rDrive", rDrive);
-            telemetry.addData("Arm Mode", robot.arm1.getMode());
+            telemetry.addData("Arm Mode", robot.arm1.getMode() + "     Value: " + robot.arm1.getCurrentPosition());
             telemetry.update();
 
             // Assign all power values
@@ -196,7 +196,7 @@ public class PushbotTeleopPOV_Linear2 extends LinearOpMode {
             robot.rDrive.setPower(fDrive - rDrive);
             robot.cDrive.setPower(sDrive);
 
-            robot.arm1.setPower(-gamepad2.left_stick_y * 0.25);
+            robot.arm1.setPower(-gamepad2.left_stick_y * 0.125);
             robot.arm2.setPower(gamepad2.right_stick_y * 0.25);
             robot.fLift.setPower(fLift);
 

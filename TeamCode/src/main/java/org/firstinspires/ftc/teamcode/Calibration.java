@@ -76,7 +76,7 @@ public class Calibration extends LinearOpMode {
                     robot.fs2.setPosition(fs2 - .35);
                     robot.fs3.setPosition(fs3 + .35);
                     robot.fs4.setPosition(fs4 - .35);
-                    robot.claw.setPosition(claw + .55);
+                    robot.claw.setPosition(claw + .75);
 
                 }
             }
@@ -122,10 +122,15 @@ public class Calibration extends LinearOpMode {
                 if (type == 3) {
                     telemetry.addData("Value", fs3);
                     if (gamepad1.dpad_up){
-                        while(gamepad1.dpad_up) {
-                            sleep(0);
-                        }
                         fs3 += 0.01;
+                        for(int i = 0; i>=250; i++){
+                            if(gamepad1.dpad_up) {
+                                sleep(1);
+                            }
+                            else {
+                                break;
+                            }
+;                        }
                     }
                     if (gamepad1.dpad_down){
                         while(gamepad1.dpad_down) {
